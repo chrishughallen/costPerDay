@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form input {
+  margin: 10px;
+}
+
+.input__number {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 18px;
+}
+
+.form__submit--hide,
+.form__newExpense--hide {
+  display: none;
+}
+
+.form__submit {
+  width: 100%;
+  margin: 1rem auto;
+}
