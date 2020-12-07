@@ -6,29 +6,33 @@
 // instead of rendering a new button just swap the text and class/action of the submit btn.
 
 // When the user clicks 'add a new expense'
-// - The expense name input field should appear *
-// - The epense amount input field should appear *
-// - The 'add a new expense' btn text should say 'save' *
-// - A 'cancel button should appear' *
+// - The expense name input field should appear **
+// - The epense amount input field should appear **
+// - The 'add a new expense' btn text should say 'save' **
+// - A 'cancel button should appear' **
 
 // When the user clicks 'save'
-// - The textInput should disappear *
-// - The number input should disappear *
-// - The textInput should be replaced by the value of the textInput
-// - The numberInput should be replaced by the value of the numberInput *
-// - There should be a third column item that show that specific item / 30 - cost per day.
-// - The 'save' btn should now say 'add' - and should allow use to add another expense *
-// - The Cost per day at the top should update *
-// - If the user is missing data, dont do anything *
+// - The textInput should disappear **
+// - The number input should disappear **
+// - The textInput should be replaced by the value of the textInput **
+// - The numberInput should be replaced by the value of the numberInput **
+// - There should be a third column item that show that specific item / 30 - cost per day. **
+// - The 'save' btn should now say 'add' - and should allow use to add another expense **
+// - The Cost per day at the top should update
+// - If the user is missing data, dont do anything
 
 // When the user clicks 'Cancel',
-// - the form should be destoryed
-// - the submit button should say 'add'
-// - the cancel button should hide.
+// - the form should be destoryed **
+// - the submit button should say 'add' **
+// - the cancel button should hide. **
+
+// If the user tries to save with an empty field
+// - the form should do nothing, no logic should happen, and the form should stay as is.
 
 const submitBtn = document.querySelector('.js-submit')
 const cancelBtn = document.querySelector('.js-cancel')
 const form = document.querySelector('.js-form')
+const table = document.querySelector('.js-expense-table')
 const cpd = document.querySelector('.js-cost-per-day')
 submitBtn.addEventListener('click', handleSubmit)
 cancelBtn.addEventListener('click', handleCancel)
@@ -57,6 +61,7 @@ function acceptNewInput () {
 function saveNewInput () {
   const name = document.querySelector('.form__textInput').value
   const amount = document.querySelector('.form__numberInput').value
+  // If fields are empty do not do anything.
   if (name == "" || amount == "") {
     return
   }
@@ -75,6 +80,7 @@ function updateSubmitBtn (action) {
     submitBtn.innerHTML = 'add'
   }
 }
+
 function showCancelBtn (bool) {
   if (bool) {
     cancelBtn.classList.add('cancelBtn--show')
@@ -88,17 +94,18 @@ function updateCostPerDay (monthlyTotal) {
   cpd.innerHTML = costPerDay.toFixed(2)
 }
 
-
 function newTextLine (name) {
   const text = document.createElement("div")
   text.innerHTML = name
   return text
 }
 
-function newAmountLine (value) {
+function newAmountLine (value, frequency) {
   const amount = document.createElement("div")
-  amount.innerHTML = value
-  amount.className = "js-expense-value"
+  amount.innerHTML = `$${parseFloat(value).toFixed(2)}`
+  if (frequency == "monthly") {
+    amount.className = "js-expense-value"
+  }
   return amount
 }
 
@@ -106,14 +113,16 @@ function renderSavedInput (name, amount) {
   const userInput = document.createElement("div")
   userInput.className = "form__expenseLine"
   userInput.appendChild(newTextLine(name))
-  userInput.appendChild(newAmountLine(amount))
-  form.appendChild(userInput)
+  userInput.appendChild(newAmountLine(amount, "monthly"))
+  userInput.appendChild(newAmountLine(amount/30))
+  table.appendChild(userInput)
 }
 
 function destroyTextInput () {
   let textInput = document.querySelector('.form__textInput')
   textInput.parentNode.removeChild(textInput)
 }
+
 function destroyNumberInput () {
   let numberInput = document.querySelector('.form__numberInput')
   numberInput.parentNode.removeChild(numberInput)
@@ -126,13 +135,15 @@ function newTextInput () {
   input.placeholder = "name"
   return input
 }
+
 function newNumberInput () {
   const input = document.createElement('input')
   input.type = "number"
   input.className = "form__numberInput"
-  input.placeholder = "amount"
+  input.placeholder = "amount per month"
   return input
 }
+
 function renderFormField () {
   const formField = document.createElement('div')
   formField.appendChild(newTextInput())
@@ -144,7 +155,8 @@ function calculateTotalExpenses () {
   const expenses = Array.from(document.querySelectorAll('.js-expense-value'))
   let total = 0
   expenses.forEach(function(expense) {
-    total += parseFloat(expense.textContent)
+    let amount = expense.innerText.slice(1)
+    total += parseFloat(amount)
   })
   return total
 }

@@ -1,9 +1,48 @@
-.form {
-  width: 20rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin: 6rem 0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+}
+
+.submitBtn {
+  opacity: 0.6;
+  transition: 0.3s;
+  font-size: 1.8rem;
+  color: forestgreen;
+  display: inline;
+}
+
+.submitBtn:hover {
+  opacity: 1;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .cancelBtn {
   display: none;
+  opacity: 0.4;
+  font-size: 1.8rem;
+  transition: 0.3s;
+  color: red;
+}
+
+.cancelBtn:hover {
+  opacity: 1;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .cancelBtn--show {
@@ -12,5 +51,14 @@
 
 .form__expenseLine {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.expenses_table {
+  border-left: 1px solid grey;
+  padding-left: 1rem;
+}
+
+.expense__heading {
+  font-weight: bold;
 }

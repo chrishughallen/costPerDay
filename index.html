@@ -8,13 +8,22 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>It costs you $<span class="js-cost-per-day">0</span> per day to live.</h1>
   <div class="wrapper">
-    <h1>It costs you $<span class="js-cost-per-day">0</span> per day to live.</h1>
-    <div class="form js-form"></div>
-    <button class="js-submit">add</button>
-    <button class="js-cancel cancelBtn">cancel</button>
-  </div>
 
+    <div class="form js-form">
+      <div class="js-submit submitBtn">add</div>
+      <div class="js-cancel cancelBtn">cancel</div>
+    </div>
+
+    <div class="expenses_table js-expense-table">
+      <div class="form__expenseLine">
+        <div class="expense__heading">Expense</div>
+        <div class="expense__heading">Monthly</div>
+        <div class="expense__heading">Daily</div>
+      </div>
+    </div>
+  </div>
 <script src="app.js"></script>
 </body>
 </html>
